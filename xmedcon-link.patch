@@ -18,3 +18,32 @@
  libmdc_la_DEPENDENCIES = $(ENABLED_FRMTS_OBJS)
  EXTRA_libmdc_la_SOURCES = $(ALL_FRMTS_SOURCES)
  
+--- xmedcon-0.10.2/configure.in.orig	2007-12-03 22:16:56.000000000 +0100
++++ xmedcon-0.10.2/configure.in	2008-01-20 13:30:40.735355096 +0100
+@@ -530,16 +530,21 @@
+    [  --with-nifti-prefix=PFX   Prefix where NIFTI library is installed (optional)]
+  , nifti_prefix="$withval", nifti_prefix="")
+ if test x"$nifti_prefix" != "x"; then
+-    ZNZ_LDFLAGS="-L$nifti_prefix/lib -lznz"
+-    NIFTI_LDFLAGS="-L$nifti_prefix/lib -lniftiio $ZNZ_LDFLAGS"
++    if test "$nifti_prefix" != "/usr"; then
++	nifti_lib="-L$nifti_prefix/lib"
++    else
++	nifti_lib=
++    fi
++    ZNZ_LDFLAGS="$nifti_lib -lznz"
++    NIFTI_LDFLAGS="$nifti_lib -lniftiio $ZNZ_LDFLAGS"
+     NIFTI_CFLAGS=""
+     AC_CHECK_FILE($nifti_prefix/include/nifti/nifti1_io.h,NIFTI_CFLAGS="-I$nifti_prefix/include/nifti",NIFTI_CFLAGS="-I$nifti_prefix/include")
+     LDFLAGS="$LDFLAGS -lm $NIFTI_LDFLAGS $ZLIB_LDFLAGS"
+     CPPFLAGS="$CPPFLAGS $NIFTI_CFLAGS $ZLIB_LDFLAGS"
+ else
+-    ZNZ_LDFLAGS="-L../libs/nifti -lznz"
+-    NIFTI_LDFLAGS="-L../libs/nifti -lniftiio $ZNZ_LDFLAGS"
+-    NIFTI_CFLAGS="-I../libs/nifti"
++    ZNZ_LDFLAGS="\$(top_builddir)/libs/nifti/libznz.la"
++    NIFTI_LDFLAGS="\$(top_builddir)/libs/nifti/libniftiio.la $ZNZ_LDFLAGS"
++    NIFTI_CFLAGS="-I\$(top_srcdir)/libs/nifti"
+ fi
+ 
+ dnl Check for installed libniftiio
