@@ -1,4 +1,4 @@
-# TODO: tpc
+# TODO: shared nifti
 Summary:	(X)MedCon - image conversion utility
 Summary(pl.UTF-8):	(X)MedCon - narzędzie do konwersji obrazów
 Name:		xmedcon
@@ -15,6 +15,7 @@ BuildRequires:	automake
 BuildRequires:	gtk+2-devel >= 1:2.0
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
+BuildRequires:	libtpcimgio-devel
 BuildRequires:	pkgconfig
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
@@ -71,6 +72,7 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	glib2-devel >= 2.0
 Requires:	libpng-devel
+Requires:	libtpcimgio-devel
 Requires:	zlib-devel
 
 %description devel
@@ -101,7 +103,9 @@ Statyczna biblioteka (X)MedCon.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+CPPFLAGS="-I/usr/include/tpc"
+%configure \
+	--enable-tpc
 %{__make}
 
 %install
