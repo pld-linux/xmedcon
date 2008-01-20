@@ -1,0 +1,20 @@
+--- xmedcon-0.10.2/source/Makefile.am.orig	2007-11-14 23:27:55.000000000 +0100
++++ xmedcon-0.10.2/source/Makefile.am	2008-01-20 02:27:04.854377348 +0100
+@@ -92,7 +92,7 @@
+ xmedcon_LDADD = $(APPICON_OBJ) libmdc.la
+ xmedcon_LDFLAGS = -mwindows $(GDK_PIXBUF_LIBS) -lm
+ else
+-xmedcon_LDADD =  libmdc.la
++xmedcon_LDADD =  libmdc.la $(XMEDCON_GTK_LIBS)
+ xmedcon_LDFLAGS = $(GDK_PIXBUF_LIBS) -lm
+ endif
+ 
+@@ -213,7 +213,7 @@
+ libmdc_la_LIBADD = $(ENABLED_FRMTS_OBJS) \
+                    $(DICM_LIB) $(LJPG_LIB) \
+                    $(ZLIB_LIB) $(PNG_LIB) $(NIFTI_LIB) \
+-                   $(TPC_LIB) $(XMEDCON_GLIB_LIBS) $(XMEDCON_GTK_LIBS)
++                   $(TPC_LIB) $(XMEDCON_GLIB_LIBS)
+ libmdc_la_DEPENDENCIES = $(ENABLED_FRMTS_OBJS)
+ EXTRA_libmdc_la_SOURCES = $(ALL_FRMTS_SOURCES)
+ 
